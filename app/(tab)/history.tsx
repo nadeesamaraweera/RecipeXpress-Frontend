@@ -15,10 +15,10 @@ export default function HistoryScreen() {
         }
     }, [user]);
 
-    const renderItem = ({ item }: { item: { id: string; query: string; userId: string; createdAt: string } }) => (
+    const renderItem = ({item}: { item: { id: string; query: string; userId: string; createdAt: string } }) => (
         <SearchHistoryItem
             query={item}
-            onPress={() => router.push(`/recipe/${Number(item.id)}`)} // Ensure id is parsed as a number
+            onPress={() => router.push(`/recipe/${Number(item.id)}`)}
         />
     );
 

@@ -1,9 +1,9 @@
-import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-import { useEffect } from 'react';
-import { useRecipeStore } from '../../store/store';
-import { Clock, Users, ChefHat } from 'lucide-react-native';
-import { Ingredient } from '../../types/types';
+import {View, Text, Image, ScrollView, StyleSheet} from 'react-native';
+import {useLocalSearchParams} from 'expo-router';
+import {useEffect} from 'react';
+import {useRecipeStore} from '../../store/store';
+import {Clock, Users, ChefHat} from 'lucide-react-native';
+import {Ingredient} from '../../types/types';
 
 export default function RecipeDetailsScreen() {
     const { id } = useLocalSearchParams();
