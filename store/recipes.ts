@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import {API_URL} from "../config";
 
 interface User {
     id: string;
@@ -40,8 +41,7 @@ searchRecipes: async (user, ingredients) => {
             if (!user || !user.token) {
                 throw new Error('User not authenticated or token missing');
             }
-            const response = await axios.get('http://localhost:3000/api/recipes/search', {
-                params: { ingredients },
+            const response = await axios.get(`${API_URL}/recipes/search`, {                params: { ingredients },
                 headers: { Authorization: `Bearer ${user.token}` }
             });
 
@@ -91,7 +91,7 @@ searchRecipes: async (user, ingredients) => {
                 throw new Error('User not authenticated or token missing');
             }
 
-            const response = await axios.get('http://localhost:3000/api/recipes/history', {
+            const response = await axios.get(`${API_URL}/recipes/history`, {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
 
@@ -100,6 +100,11 @@ searchRecipes: async (user, ingredients) => {
                 loading: false
             });
         } catch (error) {
+            if (error.response && error.response.status === 404) {
+                console.error('Fetch search history failed: Endpoint not found');
+            } else {
+                console.error('Fetch search history failed:', error.message);
+            }
             set({
                 error: 'Failed to fetch search history',
                 loading: false

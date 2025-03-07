@@ -9,6 +9,7 @@ import { Search } from 'lucide-react-native';
 export default function SearchScreen() {
     const router = useRouter();
     const { recipes, searchRecipes, loading, fetchSearchHistory } = useRecipeStore();
+
     useEffect(() => {
         if (user) {
             fetchSearchHistory(user);
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
         borderRadius: 8
     },
     searchButton: {
-        backgroundColor: '#ff6b6b',
+        backgroundColor: '#2E7D32',
         padding: 10,
         borderRadius: 8
     },
