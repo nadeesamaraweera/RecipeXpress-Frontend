@@ -8,6 +8,7 @@ interface User {
     id: string;
     name: string;
     email: string;
+    token: string;
 }
 
 interface AuthContextType {
@@ -29,7 +30,6 @@ const storage = {
     },
     async setItem(key: string, value: string): Promise<void> {
         if (Platform.OS === 'web') {
-            localStorage.setItem(key, value);
         } else {
             await SecureStore.setItemAsync(key, value);
         }
@@ -71,8 +71,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 throw new Error('User not found');
             }
 
-            await storage.setItem('user', JSON.stringify(userData));
-            setUser(userData);
+            const userWithToken = { ...userData, token };
+            await storage.setItem('user', JSON.stringify(userWithToken));
+            setUser(userWithToken);
         } catch (error) {
             console.error('Login failed:', error);
             throw new Error('Invalid email or password');
@@ -80,10 +81,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     const signUp = async (credentials: { email: string; password: string; name: string }) => {
-        await axios.post('http://localhost:3000/api/auth/register', credentials);
-        const user = { id: '1', name: credentials.name, email: credentials.email }; // Mock user for now
-        await storage.setItem('user', JSON.stringify(user));
-        setUser(user);
+        try {
+            const response = await axios.post('http://localhost:3000/api/auth/register', credentials);
+            const { token } = response.data;
+
+            const userWithToken = { id: '1', name: credentials.name, email: credentials.email, token };
+            await storage.setItem('user', JSON.stringify(userWithToken));
+            setUser(userWithToken);
+        } catch (error) {
+            console.error('Registration failed:', error);
+            throw new Error('Registration failed. Please try again.');
+        }
     };
 
     const signOut = async () => {
