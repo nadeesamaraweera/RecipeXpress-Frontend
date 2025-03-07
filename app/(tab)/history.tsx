@@ -1,14 +1,15 @@
-import { useSearchHistoryStore } from '../../store/slices/searchHistorySlice';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {useRouter} from 'expo-router';
+import {useAuth} from '../../context/auth';
 import SearchHistoryItem from '../../components/SearchHistoryItem';
-import {useRouter} from "expo-router";
-import { useAuth } from '../../context/auth';
-import {FlatList, View} from "react-native";
-import { useEffect } from 'react';
+import {useEffect} from 'react';
+import {useSearchHistoryStore} from '../../store/slices/searchHistorySlice';
 
 export default function HistoryScreen() {
     const router = useRouter();
-    const { user } = useAuth();
-    const { searchHistory, fetchSearchHistory } = useSearchHistoryStore();
+    const {user} = useAuth();
+    const {searchHistory, fetchSearchHistory} = useSearchHistoryStore();
+
     useEffect(() => {
         if (user) {
             fetchSearchHistory(user);
@@ -30,7 +31,8 @@ export default function HistoryScreen() {
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
                 contentContainerStyle={styles.list}
-                ListEmptyComponent={<Text style={styles.emptyText}>No search history found.</Text>}            />
+                ListEmptyComponent={<Text style={styles.emptyText}>No search history found.</Text>}
+            />
         </View>
     );
 }

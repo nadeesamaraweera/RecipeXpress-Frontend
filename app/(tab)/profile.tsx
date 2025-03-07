@@ -4,7 +4,7 @@ import {useAuth} from '../../context/auth';
 
 export default function ProfileScreen() {
     const router = useRouter();
-    const { user, signOut } = useAuth();
+    const {user, signOut} = useAuth();
 
     const handleSignOut = async () => {
         await signOut();
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     },
     button: {
         height: 50,
-        backgroundColor: '#ff6b6b',
+        backgroundColor: '#2E7D32',
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',

@@ -1,8 +1,8 @@
-import RecipeCard from '../../components/RecipeCard';
 import {useEffect, useState} from 'react';
 import {View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import {useRouter} from 'expo-router';
 import {useAuth} from '../../context/auth';
+import RecipeCard from '../../components/RecipeCard';
 import {Search} from 'lucide-react-native';
 import {useRecipeStore} from '../../store/slices/recipeSlice';
 import {useSearchHistoryStore} from '../../store/slices/searchHistorySlice';
@@ -10,6 +10,7 @@ import {useSearchHistoryStore} from '../../store/slices/searchHistorySlice';
 export default function SearchScreen() {
     const router = useRouter();
     const {user} = useAuth();
+    const [ingredients, setIngredients] = useState('');
     const {recipes, searchRecipes, loading} = useRecipeStore();
     const {fetchSearchHistory} = useSearchHistoryStore();
 
@@ -24,7 +25,6 @@ export default function SearchScreen() {
             searchRecipes(user, ingredients);
         }
     };
-
 
     return (
         <View style={styles.container}>
@@ -41,24 +41,24 @@ export default function SearchScreen() {
                 </TouchableOpacity>
             </View>
 
-        {loading ? (
-            <Text>Finding delicious recipes...</Text>
-        ) : (
-            <FlatList
-                data={recipes}
-                keyExtractor={(item) => item.id.toString()}
+            {loading ? (
+                <Text>Finding delicious recipes...</Text>
+            ) : (
+                <FlatList
+                    data={recipes}
+                    keyExtractor={(item) => item.id.toString()}
                     renderItem={({item}) => (
-                    <RecipeCard
-                    recipe={item}
-                onPress={() => router.push(`/recipe/${item.id}`)}
-            />
-        )}
-            contentContainerStyle={styles.list}
-            ListEmptyComponent={
-            <Text>No recipes found. Try searching with different ingredients!</Text>
-        }
-            />
-        )}
+                        <RecipeCard
+                            recipe={item}
+                            onPress={() => router.push(`/recipe/${item.id}`)}
+                        />
+                    )}
+                    contentContainerStyle={styles.list}
+                    ListEmptyComponent={
+                        <Text>No recipes found. Try searching with different ingredients!</Text>
+                    }
+                />
+            )}
         </View>
     );
 }
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
         padding: 16,
         gap: 16
     }
-})
+});
