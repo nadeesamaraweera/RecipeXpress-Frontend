@@ -1,4 +1,4 @@
-import { useRecipeStore } from '../../store/recipes';
+import { useSearchHistoryStore } from '../../store/slices/searchHistorySlice';
 import SearchHistoryItem from '../../components/SearchHistoryItem';
 import {useRouter} from "expo-router";
 import { useAuth } from '../../context/auth';
@@ -8,8 +8,7 @@ import { useEffect } from 'react';
 export default function HistoryScreen() {
     const router = useRouter();
     const { user } = useAuth();
-    const { searchHistory, fetchSearchHistory } = useRecipeStore();
-
+    const { searchHistory, fetchSearchHistory } = useSearchHistoryStore();
     useEffect(() => {
         if (user) {
             fetchSearchHistory(user);

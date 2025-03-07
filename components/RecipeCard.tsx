@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native';
-import { Recipe } from '../types/recipe';
+import { Recipe } from '../types/types';
 import { Clock, Users } from 'lucide-react-native';
 
 interface RecipeCardProps {

@@ -1,8 +1,9 @@
 import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
-import { useRecipeStore } from '../../store/recipes';
+import { useRecipeStore } from '../../store/store';
 import { Clock, Users, ChefHat } from 'lucide-react-native';
+import { Ingredient } from '../../types/types';
 
 export default function RecipeDetailsScreen() {
     const { id } = useLocalSearchParams();
@@ -47,7 +48,7 @@ export default function RecipeDetailsScreen() {
                         <ChefHat size={20} color="#666" />
                         <Text style={styles.sectionTitle}>Ingredients</Text>
                     </View>
-                    {currentRecipe.extendedIngredients.map((ingredient, index) => (
+                    {currentRecipe.extendedIngredients.map((ingredient: Ingredient, index: number) => (
                         <Text key={index} style={styles.ingredientText}>
                             • {ingredient.original}
                         </Text>
