@@ -17,6 +17,9 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~18.3.12",
+    "expo-linear-gradient": "^14.0.2",
+    "expo-router": "^4.0.17",
+    "lucide-react-native": "^0.477.0",
     "typescript": "^5.3.3"
   },
   "private": true
